@@ -36,10 +36,10 @@ class PickColorView : View() {
             setOnMouseClicked {
                 setMouseCursor(Cursor.DEFAULT)
                 pickColorController.pickColor(this) { pickedColor ->
+                    dataController.pickedColor = pickedColor
                     runLater {
-                        dataController.computeData(pickedColor) {
+                        dataController.computeData {
                             mainController.showResultView()
-                            dataController.swapImage(mainController.imageToShow)
                         }
                     }
                 }

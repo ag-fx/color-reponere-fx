@@ -26,6 +26,22 @@ object ColorSpaceUtils {
         return firstFactor.plus(secondFactor).plus(thirdFactor).plus(lastFactor)
     }
 
+    fun max(vararg values: Double): Double {
+        var max = values.first()
+        values.forEach {
+            if (max < it) max = it
+        }
+        return max
+    }
+
+    fun min(vararg values: Double): Double {
+        var min = values.first()
+        values.forEach {
+            if (min > it) min = it
+        }
+        return min
+    }
+
     const val DIFF_FUZZINESS: Double = 1.0
     const val MIN_DIFF_SENSITIVITY: Double = 0.01
     const val MAX_DIFF_SENSITIVITY: Double = 1.0

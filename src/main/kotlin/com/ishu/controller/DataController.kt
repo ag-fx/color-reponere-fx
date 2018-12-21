@@ -9,16 +9,16 @@ import javafx.scene.paint.Color
 import tornadofx.*
 
 class DataController : Controller() {
-    private lateinit var pickedColor: Color
+
+    var pickedColor: Color = DEF_COLOR_TO_WRITE
+    var colorToWrite: Color = DEF_COLOR_TO_WRITE
+    var fuzziness: Double = ColorSpaceUtils.DIFF_FUZZINESS
 
     private var isCurrentImageSource = DEF_IS_CURRENT_IMAGE_SOURCE
     private var isDataCalculated = DEF_IS_DATA_CALCULATED
-    private var fuzziness: Double = ColorSpaceUtils.DIFF_FUZZINESS
-    private var colorToWrite: Color = DEF_COLOR_TO_WRITE
 
     private lateinit var sourceImage: Image
     private lateinit var resultImage: Image
-
 
     fun bindSourceImage(imageView: ImageView, imageToShow: SimpleObjectProperty<Image?>) = with(imageView.imageProperty()) {
         addListener { _, _, newImage ->
@@ -29,14 +29,13 @@ class DataController : Controller() {
         bind(imageToShow)
     }
 
-    fun computeData(pickedColor: Color, onEnd: () -> Unit) {
-        this.pickedColor = pickedColor
+    fun computeData(onEnd: () -> Unit) {
         // find similar colors
         // change matched colors with the specific one
         sourceImage.forEachPixelWrite({ x, y, color, pixelWriter ->
             val colorDifference = ColorSpaceUtils.calcApproxDistance(color, pickedColor)
             if (colorDifference <= fuzziness) {
-                pixelWriter.setColor(x, y, Color.WHITE)
+                pixelWriter.setColor(x, y, colorToWrite)
             } else {
                 pixelWriter.setColor(x, y, Color.BLACK)
             }
@@ -62,15 +61,9 @@ class DataController : Controller() {
     }
 
     fun refreshImage(imageToShow: SimpleObjectProperty<Image?>) {
-        computeData(pickedColor) {}
+        computeData {}
         if (!isCurrentImageSource) imageToShow.set(resultImage)
     }
-
-    fun setFuzziness(value: Double) {
-        fuzziness = value
-    }
-
-    fun getFuzziness(): Double = fuzziness
 
     companion object {
         private const val DEF_IS_CURRENT_IMAGE_SOURCE: Boolean = true

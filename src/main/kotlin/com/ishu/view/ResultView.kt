@@ -5,13 +5,12 @@ import com.ishu.controller.DataController
 import com.ishu.controller.MainController
 import com.ishu.extensions.bindPrimaryStageWidth
 import com.ishu.extensions.saveToFile
+import com.ishu.extensions.toCaption
+import com.ishu.model.ColorSpace
 import com.ishu.utils.ColorSpaceUtils
 import javafx.geometry.Pos
 import javafx.scene.CacheHint
-import javafx.scene.control.ContextMenu
-import javafx.scene.control.Label
-import javafx.scene.control.MenuItem
-import javafx.scene.control.Slider
+import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.paint.Color
 import tornadofx.*
@@ -33,8 +32,15 @@ class ResultView : View() {
         }
 
     private lateinit var imageView: ImageView
-    private lateinit var slider: Slider
+    private lateinit var distanceLabel: Label
     private lateinit var valueLabel: Label
+    private lateinit var slider: Slider
+
+    private lateinit var pickedColorPicker: ColorPicker
+    private lateinit var pickedColorLabel: Label
+
+    private lateinit var colorToWritePicker: ColorPicker
+    private lateinit var colorToWriteLabel: Label
 
     override val root = hbox {
         imageView = imageview {
@@ -50,6 +56,37 @@ class ResultView : View() {
         vbox {
             alignment = Pos.CENTER
             spacing = 10.0
+            distanceLabel = label {}
+            hbox {
+                alignment = Pos.CENTER
+                spacing = 50.0
+                pickedColorPicker = colorpicker {
+                    setOnAction {
+                        showColor(pickedColorLabel, value)
+                        showDistance(value, colorToWritePicker.value)
+                        dataController.apply {
+                            pickedColor = value
+                            runLater { computeData { refreshImage(mainController.imageToShow) } }
+                        }
+                    }
+                }
+                colorToWritePicker = colorpicker {
+                    setOnAction {
+                        showColor(colorToWriteLabel, value)
+                        showDistance(pickedColorPicker.value, value)
+                        dataController.apply {
+                            colorToWrite = value
+                            runLater { computeData { refreshImage(mainController.imageToShow) } }
+                        }
+                    }
+                }
+            }
+            hbox {
+                alignment = Pos.CENTER
+                spacing = 50.0
+                pickedColorLabel = label("Picked color:\n")
+                colorToWriteLabel = label("Color to write:\n")
+            }
             hbox {
                 alignment = Pos.CENTER
                 spacing = 5.0
@@ -57,16 +94,16 @@ class ResultView : View() {
                 slider = slider(
                         ColorSpaceUtils.MIN_DIFF_SENSITIVITY,
                         ColorSpaceUtils.MAX_DIFF_SENSITIVITY,
-                        dataController.getFuzziness()) {
+                        dataController.fuzziness) {
                     valueProperty().addListener { _, _, newFuzziness ->
                         with(dataController) {
-                            setFuzziness(newFuzziness as Double)
+                            dataController.fuzziness = newFuzziness as Double
                             valueLabel.text = newFuzziness.formatToTenths()
-                            runLater { refreshImage(mainController.imageToShow) }
+                            runLater { computeData { } }
                         }
                     }
                 }
-                valueLabel = label(dataController.getFuzziness().formatToTenths())
+                valueLabel = label(dataController.fuzziness.formatToTenths())
             }
             addClass(Styles.dataBackground)
             bindPrimaryStageWidth(2, 2)
@@ -77,16 +114,41 @@ class ResultView : View() {
 
     override fun onDock() = with(dataController) {
         super.onDock()
-        slider.value = getFuzziness()
+        pickedColorPicker.value = pickedColor
+        colorToWritePicker.value = colorToWrite
+        slider.value = fuzziness
+
+        showDistance(pickedColorPicker.value, colorToWritePicker.value)
+        showColor(pickedColorLabel, pickedColorPicker.value)
+        showColor(colorToWriteLabel, colorToWritePicker.value)
+
+        swapImage(mainController.imageToShow)
     }
 
     override fun onUndock() {
         super.onUndock()
+        distanceLabel.text = ""
+        pickedColorLabel.text = "Picked color:\n"
+        colorToWriteLabel.text = "Color to write:\n"
         dataController.resetData()
     }
 
-    private fun showData(firstColor: Color, secondColor: Color) {
+    private fun showColor(label: Label, color: Color) = with(ColorSpace(color)) {
+        label.text = "RGB:  ${rgb.toCaption()}\n" +
+                "CMY:  ${cmy.toCaption()}\n" +
+                "CMYK: ${cmyk.toCaption()}\n" +
+                "HSV:  ${hsv.toCaption()}\n" +
+                "HSL:  ${hsl.toCaption()}\n" +
+                ""
+    }
 
+    private fun showDistance(firstColor: Color, secondColor: Color) {
+        val distance = ColorSpaceUtils.calcDistance(firstColor, secondColor)
+        val distanceAprox = ColorSpaceUtils.calcApproxDistance(firstColor, secondColor)
+        distanceLabel.text = "Euclidean:\n" +
+                "1) $distance\n" +
+                "2) $distanceAprox\n" +
+                ""
     }
 
     private fun Double.formatToTenths(): String = String.format("%.2f", this)
