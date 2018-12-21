@@ -14,9 +14,9 @@ class PickColorController : Controller() {
 
     fun calculateDelta(event: MouseEvent, imageView: ImageView) = with(imageView) {
         val scale = image.width / fitWidth
-        val deltaX = event.x * scale
-        val deltaY = event.y * scale
-        mousePoint = Point(deltaX, deltaY)
+        val imageX = event.x * scale
+        val imageY = event.y * scale
+        mousePoint = Point(imageX, imageY)
     }
 
     fun traceColor(imageView: ImageView) = with(imageView) {

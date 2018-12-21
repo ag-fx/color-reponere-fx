@@ -26,7 +26,7 @@ object ColorSpaceUtils {
         return firstFactor.plus(secondFactor).plus(thirdFactor).plus(lastFactor)
     }
 
-    const val DIFF_FUZZINESS: Double = 0.15
+    const val DIFF_FUZZINESS: Double = 1.0
     const val MIN_DIFF_SENSITIVITY: Double = 0.01
     const val MAX_DIFF_SENSITIVITY: Double = 1.0
 }

@@ -32,7 +32,7 @@ class DataController : Controller() {
         // find similar colors
         // change matched colors with the specific one
         sourceImage.forEachPixelWrite({ x, y, color, pixelWriter ->
-            val colorDifference = ColorSpaceUtils.calcDistance(color, pickedColor)
+            val colorDifference = ColorSpaceUtils.calcApproxDistance(color, pickedColor)
             if (colorDifference <= fuzziness) {
                 pixelWriter.setColor(x, y, Color.WHITE)
             } else {
