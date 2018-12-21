@@ -14,9 +14,11 @@ class DataController : Controller() {
     private var isCurrentImageSource = DEF_IS_CURRENT_IMAGE_SOURCE
     private var isDataCalculated = DEF_IS_DATA_CALCULATED
     private var fuzziness: Double = ColorSpaceUtils.DIFF_FUZZINESS
+    private var colorToWrite: Color = DEF_COLOR_TO_WRITE
 
     private lateinit var sourceImage: Image
     private lateinit var resultImage: Image
+
 
     fun bindSourceImage(imageView: ImageView, imageToShow: SimpleObjectProperty<Image?>) = with(imageView.imageProperty()) {
         addListener { _, _, newImage ->
@@ -73,5 +75,6 @@ class DataController : Controller() {
     companion object {
         private const val DEF_IS_CURRENT_IMAGE_SOURCE: Boolean = true
         private const val DEF_IS_DATA_CALCULATED: Boolean = false
+        private val DEF_COLOR_TO_WRITE: Color = Color.WHITE
     }
 }

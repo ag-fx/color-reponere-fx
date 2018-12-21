@@ -34,8 +34,6 @@ class ResultView : View() {
 
     private lateinit var imageView: ImageView
     private lateinit var slider: Slider
-    private lateinit var scoreLabel: Label
-    private lateinit var descriptionLabel: Label
     private lateinit var valueLabel: Label
 
     override val root = hbox {
@@ -52,8 +50,6 @@ class ResultView : View() {
         vbox {
             alignment = Pos.CENTER
             spacing = 10.0
-            scoreLabel = label { style { fontSize = 22.px } }
-            descriptionLabel = label { style { fontSize = 18.px } }
             hbox {
                 alignment = Pos.CENTER
                 spacing = 5.0

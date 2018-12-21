@@ -10,7 +10,7 @@ import javafx.stage.FileChooser
 import org.controlsfx.control.Notifications
 import tornadofx.*
 
-class PhotoChooserController : Controller() {
+class ImageChooserController : Controller() {
 
     fun chooseImage(onHasImageFile: (image: Image) -> Unit) {
         val filters = arrayOf(FileChooser.ExtensionFilter("images (*.jpg, *.png)", imgExtensions))

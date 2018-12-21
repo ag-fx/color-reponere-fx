@@ -19,13 +19,9 @@ class PickColorController : Controller() {
         mousePoint = Point(imageX, imageY)
     }
 
-    fun traceColor(imageView: ImageView) = with(imageView) {
-        mouseColor.set(image.pixelReader.getColor(mousePoint.x, mousePoint.y))
-    }
+    fun traceColor(imageView: ImageView) = mouseColor.set(imageView.image.pixelReader.getColor(mousePoint.x, mousePoint.y))
 
-    fun pickColor(imageView: ImageView, onPicked: (color: Color) -> Unit) = with(imageView) {
-        onPicked(image.pixelReader.getColor(mousePoint.x, mousePoint.y))
-    }
+    fun pickColor(imageView: ImageView, onPicked: (color: Color) -> Unit) = onPicked(imageView.image.pixelReader.getColor(mousePoint.x, mousePoint.y))
 
     fun getColorTracedByMouse(): SimpleObjectProperty<Color?> = mouseColor
 }

@@ -2,7 +2,7 @@ package com.ishu.view
 
 import com.ishu.Styles
 import com.ishu.controller.MainController
-import com.ishu.controller.PhotoChooserController
+import com.ishu.controller.ImageChooserController
 import com.ishu.extensions.bindPrimaryStageWidth
 import com.ishu.utils.AppUtils
 import javafx.geometry.Pos
@@ -11,7 +11,7 @@ import tornadofx.*
 
 class PhotoChooserView : View() {
     private val mainController: MainController by inject()
-    private val photoChooserController: PhotoChooserController by inject()
+    private val imageChooserController: ImageChooserController by inject()
 
     override val root = vbox {
         alignment = Pos.CENTER
@@ -28,17 +28,17 @@ class PhotoChooserView : View() {
         label("or").addClass(Styles.defaultLabel)
         button("Choose file") {
             action {
-                photoChooserController.chooseImage {
+                imageChooserController.chooseImage {
                     mainController.imageToShow.set(it)
                     mainController.showSelectAreaView()
                 }
             }
             addClass(Styles.defaultButton)
         }
-        setOnDragOver { photoChooserController.acceptTransferModes(it) { addClass(Styles.dropBackground) } }
+        setOnDragOver { imageChooserController.acceptTransferModes(it) { addClass(Styles.dropBackground) } }
         setOnDragExited { removeClass(Styles.dropBackground) }
         setOnDragDropped { event ->
-            photoChooserController.onCheckDroppedImage(event) {
+            imageChooserController.onCheckDroppedImage(event) {
                 mainController.imageToShow.set(it)
                 mainController.showSelectAreaView()
             }

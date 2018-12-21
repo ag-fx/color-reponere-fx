@@ -40,21 +40,11 @@ class MainController : Controller() {
         changeView(selectAreaView)
     }
 
-    fun showPickColorView() {
-        changeView(pickColorView)
-    }
+    fun showPickColorView() = changeView(pickColorView)
+    fun showResultView() = changeView(resultView)
 
-    fun showResultView() {
-        changeView(resultView)
-    }
-
-    fun showBorders() {
-        borderClassProperty.set(DEF_BORDER_CLASS_PROPERTY)
-    }
-
-    fun removeBorders() {
-        borderClassProperty.set(Styles.fullscreenBorder)
-    }
+    fun showBorders() = borderClassProperty.set(DEF_BORDER_CLASS_PROPERTY)
+    fun removeBorders() = borderClassProperty.set(Styles.fullscreenBorder)
 
     fun getCurrentView(): View = currentView
 
