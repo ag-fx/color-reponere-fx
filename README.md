@@ -9,6 +9,12 @@ Allow to:
 * See [different color sapces][3]
 * Save result
 
+### Support
+If you want to support the the project or show your appreciation feel free to **[buy me a coffee / donate](https://www.paypal.me/kekc1304/1)**
+
+### Issue Tracking
+Found a bug? Have an idea for an improvement? Feel free to [add an issue](../../issues).
+
 ### Screenshots
 <img src="https://github.com/lndmflngs/color-reponere-fx/blob/master/screenshots/1.png?raw=true"  width="45%"/> <img src="https://github.com/lndmflngs/color-reponere-fx/blob/master/screenshots/2.png?raw=true" width="45%"/>  
 
@@ -24,9 +30,6 @@ Allow to:
 ```
 java -jar fxlauncher.jar
 ```
-
-## Issue Tracking
-Found a bug? Have an idea for an improvement? Feel free to [add an issue](../../issues).
 
 [1]: https://github.com/lndmflngs/memorizing-pager/releases/latest
 [2]: https://en.wikipedia.org/wiki/Color_difference#Euclidean
