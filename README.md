@@ -12,6 +12,9 @@ Allow to:
 ## Launch
 1. Download the [latest release][1]
 2. Open "run.bat" or execute a .jar file from the terminal:
+```
+java -jar fxlauncher.jar
+```
 
 ## Support
 If you want to support the the project or show your appreciation feel free to **[buy me a coffee / donate](https://www.paypal.me/kekc1304/1)**
@@ -26,10 +29,6 @@ Found a bug? Have an idea for an improvement? Feel free to [add an issue](../../
 
 ## Result
 <img src="https://github.com/lndmflngs/color-reponere-fx/blob/master/screenshots/test.png?raw=true" width="20%"/>    <img src="https://github.com/lndmflngs/color-reponere-fx/blob/master/screenshots/result.png?raw=true" width="20%"/>
-
-```
-java -jar fxlauncher.jar
-```
 
 [1]: https://github.com/lndmflngs/memorizing-pager/releases/latest
 [2]: https://en.wikipedia.org/wiki/Color_difference#Euclidean
