@@ -11,9 +11,9 @@
     <name>ColorReponereFx</name>
 
     <properties>
-        <kotlin.version>1.3.11</kotlin.version>
-        <tornadofx.version>1.7.17</tornadofx.version>
-        <fxlauncher.version>1.0.2</fxlauncher.version>
+        <kotlin.version>1.3.21</kotlin.version>
+        <tornadofx.version>1.7.18</tornadofx.version>
+        <fxlauncher.version>1.0.21</fxlauncher.version>
         <controlsfx.version>8.40.14</controlsfx.version>
 
         <!-- FxLauncher properties -->

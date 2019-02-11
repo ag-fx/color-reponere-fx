@@ -8,6 +8,7 @@ import com.ishu.extensions.saveToFile
 import com.ishu.extensions.toCaption
 import com.ishu.model.ColorSpace
 import com.ishu.utils.ColorSpaceUtils
+import javafx.beans.value.ChangeListener
 import javafx.geometry.Pos
 import javafx.scene.CacheHint
 import javafx.scene.control.*
@@ -31,6 +32,14 @@ class ResultView : View() {
             return listOf(backItem, swapItem, saveItem)
         }
 
+    private val imageListener: ChangeListener<in Number> = ChangeListener { _, _, newValue ->
+        with(dataController) {
+            fuzziness = newValue as Double
+            valueLabel.text = newValue.formatToTenths()
+            runLater { computeData { refreshImage(mainController.imageToShow) } }
+        }
+    }
+    
     private lateinit var imageView: ImageView
     private lateinit var distanceLabel: Label
     private lateinit var valueLabel: Label
@@ -95,13 +104,7 @@ class ResultView : View() {
                         ColorSpaceUtils.MIN_DIFF_SENSITIVITY,
                         ColorSpaceUtils.MAX_DIFF_SENSITIVITY,
                         dataController.fuzziness) {
-                    valueProperty().addListener { _, _, newFuzziness ->
-                        with(dataController) {
-                            dataController.fuzziness = newFuzziness as Double
-                            valueLabel.text = newFuzziness.formatToTenths()
-                            runLater { computeData { } }
-                        }
-                    }
+                    valueProperty().addListener(imageListener)
                 }
                 valueLabel = label(dataController.fuzziness.formatToTenths())
             }
