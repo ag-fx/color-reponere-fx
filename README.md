@@ -30,6 +30,6 @@ Found a bug? Have an idea for an improvement? Feel free to [add an issue](../../
 ## Result
 <img src="https://github.com/lndmflngs/color-reponere-fx/blob/master/screenshots/test.png?raw=true" width="20%"/>    <img src="https://github.com/lndmflngs/color-reponere-fx/blob/master/screenshots/result.png?raw=true" width="20%"/>
 
-[1]: https://github.com/lndmflngs/memorizing-pager/releases/latest
+[1]: https://github.com/lndmflngs/color-reponere-fx/releases/latest
 [2]: https://en.wikipedia.org/wiki/Color_difference#Euclidean
 [3]: https://www.rapidtables.com/convert/color/index.html
